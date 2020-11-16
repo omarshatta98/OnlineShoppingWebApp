@@ -1,0 +1,43 @@
+﻿@model OnlineShopping.Models.ShoppingCarts
+
+@{
+    ViewBag.Title = "Details";
+    OnlineShopping.Models.Order orderModel = new OnlineShopping.Models.Order();
+}
+
+
+<div class="text-center headding">
+    Order Details
+</div>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="main-table text-center table table-bordered">
+            <tr>
+                <th>ITEM NAME</th>
+                <th>ADDED DATE</th>
+                <th>QUANTITY</th>
+                <th>UNIT PRICE</th>
+                <th>SUBTOTAL</th>
+            </tr>
+
+            @foreach (var item in Model.CartsItems)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>EGP @Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>EGP @Html.DisplayFor(modelItem => item.SubTotal)</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="total-price">
+        <label>Total:</label>
+        <span>EGP @Model.TotalPrice</span>
+    </div>
+    <div class="partial">
+        @Html.Partial("~/Views/Order/_CreatePartial.cshtml", orderModel)
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model OnlineShopping.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    OnlineShopping.Models.Review reviewModel = new OnlineShopping.Models.Review();
+}
+
+<h1 class="text-center">@Model.Name</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 left">
+            <img class="img" src="~/Uploads/@Model.Image" />
+        </div>
+        <div class="middle">
+            <h3 class="price">@Model.Price EGP</h3>
+            <div style="font-size:large">
+                <p>
+                    Category:
+                    <a href="/Category/Details/@Model.Category.Id">@Model.Category.Name</a>
+                </p>
+                <p>Added Date:@Model.Date</p>
+            </div>
+            <h6 class="desc">Descriptions:</h6>
+            @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayTextFor(Model => Model.Details).ToString()))
+        </div>
+        <div class="col-md-3 right">
+            @Html.ActionLink("ADD TO CART", "AddToCart", "ShoppingCarts", new { id = Model.Id }, new { @class = "btn btn-success add-cart" })
+            <div class="qnt">Only @Model.Quantity left in stock!</div>
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container reviews">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="color:#959595; font-weight:bold;">
+            (@Model.Reviews.Count) Reviews
+        </div>
+        <div class="panel-body">
+            @foreach (var item in Model.Reviews)
+            {
+                <div class="rev">
+                    <div class="header" id="header">
+                        <span class="rate">
+                            Raing: @item.Rate / 5
+                        </span>
+                        <p>
+                            By <strong>@item.Customer.Name ...</strong>
+                            on <span class="date">@item.Date</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p>@item.Comment</p>
+                        <label>WHAT'S GOOD ABOUT THIS PRODUCT:</label>
+                        <p>@item.Pros</p>
+                        <label>WHAT'S NOT SO GOOD ABOUT THIS PRODUCT:</label>
+                        <p>@item.Cons</p>
+                    </div>
+                </div>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
+<div class="container">
+    @Html.Partial("~/Views/Review/_CreatePartial.cshtml", reviewModel, new ViewDataDictionary { { "ProductId", Model.Id } })
+</div>

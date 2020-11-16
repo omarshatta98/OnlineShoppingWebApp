@@ -1,0 +1,33 @@
+﻿@model IEnumerable<OnlineShopping.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container">
+    @foreach (var Ctg in Model)
+    {
+        if (Ctg.Products.Count > 0)
+        {
+            <div>
+                <h3>@Ctg.Name</h3>
+            </div>
+            <div class="row">
+                @foreach (var Prd in Ctg.Products)
+                {
+                    <div class="col-sm-6 col-md-2">
+                        <div class="thumbnail" style="width:187px">
+                            <img class="img-responsive" src="~/Uploads/@Prd.Image" />
+                            <div class="caption">
+                                <h6><a href="/Product/Details/@Prd.Id">@Prd.Name</a></h6>
+                                <h5 style="font-size:1.285714rem">@Prd.Price EGP</h5>
+                                @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCarts", new { id = Prd.Id }, new { @class = "btn btn-success", style = "width:100%" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>

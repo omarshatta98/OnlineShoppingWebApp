@@ -1,0 +1,85 @@
+﻿@model  OnlineShopping.Models.ShoppingCarts
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="text-center headding">
+    Your Shopping Cart (@Model.TotalItem <span>items</span>)
+</div>
+@if (Model.CartsItems.Count == 0)
+{
+    <div class="warning">
+        <span>
+            Shopping cart is currently empty<br />
+            Add items to your cart and view them here before you checkout.
+            <a href="/Product/Index">Continue Shopping!</a>
+        </span>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="table-responsive">
+            <table class="main-table text-center table table-bordered">
+                <tr>
+                    <th>ITEM NAME</th>
+                    <th>ADDED DATE</th>
+                    <th>QUANTITY</th>
+                    <th>UNIT PRICE</th>
+                    <th>SUBTOTAL</th>
+                    <th>Actions</th>
+                </tr>
+
+                @foreach (var item in Model.CartsItems)
+                {
+                    <tr>
+                        <td><a href="/Product/Details/@item.ProductId">@item.Product.Name</a></td>
+                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                        <td>
+                            <select class="quantity" id="@item.Id">
+                                @for (int i = 1; i <= item.Product.Quantity; i++)
+                                {
+                                    <option value="@i" @if (item.Quantity == i) { <text> selected="selected" </text> ; }>
+                                        @i
+                                    </option>
+                                }
+                            </select>
+                        </td>
+                        <td>EGP @Html.DisplayFor(modelItem => item.Price)</td>
+                        <td>EGP @Html.DisplayFor(modelItem => item.SubTotal)</td>
+                        <td>@Html.ActionLink("Remove", "RemoveFromCart", new { id = item.Id }, new { @class = "btn btn-danger" })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="total-price">
+            <label>Total:</label>
+            <span>EGP @Model.TotalPrice</span>
+        </div>
+        <div class="summary">
+            <span>
+                <a href="/Product/Index" class="osn-btn white">
+                    <span>CONTINUE SHOPPING</span>
+                </a>
+                <a href="/ShoppingCarts/Details" class="osn-btn orange">
+                    <span>CONTINUE TO CHECKOUT</span>
+                </a>
+            </span>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts{
+    <script>
+        $('.quantity').change(function () {
+            var itemId = $(this).attr('id'),
+                qnt = $(this).val();
+            var Url = "/ShoppingCarts/Edit/" + itemId + "?Quantity=" + qnt;
+            window.location.href = Url;
+        });
+    </script>
+}

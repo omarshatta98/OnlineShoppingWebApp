@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnlineShopping.Models.Review>
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+
+<h1 class="text-center">Manage Reviews</h1>
+<div class="container reviews">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="color:#959595; font-weight:bold;">
+            <i class="fa fa-edit"></i>Manage Reviews
+        </div>
+        <div class="panel-body">
+            @foreach (var item in Model)
+            {
+                <div class="rev">
+                    <div class="hidden-buttons">
+                        <a href="/Review/Edit/@item.Id" class="btn btn-xs btn btn-success">
+                            <i class="fa fa-edit"></i>Edit
+                        </a>
+                        <a href="/Review/Delete/@item.Id" class="btn btn-xs btn btn-danger">
+                            <i class="fa fa-times"></i>Delete
+                        </a>
+                    </div>
+                    <div class="header" id="header">
+                        <span class="rate">
+                            Raing: @item.Rate / 5
+                        </span><br />
+                        <a href="/Product/Details/@item.Product.Id" style="font-size:smaller">
+                            @item.Product.Name
+                        </a>
+                        <p>
+                            By <strong>@item.Customer.Name ...</strong>
+                            on <span class="date">@item.Date</span>
+                        </p>
+                    </div>
+                    <div class="hidden-body view">
+                        <p>@item.Comment</p>
+                        <label>WHAT'S GOOD ABOUT THIS PRODUCT:</label>
+                        <p>@item.Pros</p>
+                        <label>WHAT'S NOT SO GOOD ABOUT THIS PRODUCT:</label>
+                        <p>@item.Cons</p>
+                    </div>
+                </div>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('.rev .header').click(function () {
+            $(this).next('.hidden-body').fadeToggle(200);
+        });
+    </script>
+}

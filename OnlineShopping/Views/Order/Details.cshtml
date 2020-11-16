@@ -1,0 +1,67 @@
+﻿@model OnlineShopping.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h1 class="text-center">Order Details</h1>
+<div class="container customer-information">
+    <h4 class="title">Customer Information</h4>
+    <div class="row">
+        <div class="col-md-6 customer-details">
+            <h5 class="sub-title">Customer Information Details</h5>
+            <form>
+                <label>Name</label>
+                <input type="text" value="@Model.Customer.Name" disabled /><br />
+                <label>Email</label>
+                <input type="text" value="@Model.Customer.Email" disabled /><br />
+                <label>Phone</label>
+                <input type="text" value="@Model.Customer.PhoneNumber" disabled /><br />
+                <label>Country</label>
+                <input type="text" value="@Model.Customer.Country" disabled />
+            </form>
+        </div>
+        <div class="col-md-6 shipping-details">
+            <h5 class="sub-title">Shipping Information Details</h5>
+            <form>
+                <label>Name</label>
+                <input type="text" value="@Model.FullName" disabled /><br />
+                <label>Email</label>
+                <input type="text" value="@Model.Email" disabled /><br />
+                <label>Phone</label>
+                <input type="text" value="@Model.Phone" disabled /><br />
+                <label>Address</label>
+                <input type="text" value="@Model.Address" disabled /><br />
+                <label>Date</label>
+                <input type="text" value="@Model.Date" disabled /><br />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container purchases">
+    <h4 class="title">Purchases</h4>
+    <table class="table table-bordered table-responsive table-condensed">
+        <tr>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.OrderId</td>
+                <td>@item.Product.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.TotalPrice</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4">Sub-Total</td>
+            <td>@Model.TotalCost</td>
+        </tr>
+    </table>
+</div>

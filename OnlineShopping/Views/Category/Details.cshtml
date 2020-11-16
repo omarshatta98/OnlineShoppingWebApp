@@ -1,0 +1,25 @@
+﻿@model OnlineShopping.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="container">
+    <h1 class="text-center">@Model.Name</h1>
+    <div class="row">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-sm-6 col-md-2">
+                <div class="thumbnail" style="width:187px">
+                    <img class="img-responsive" src="~/Uploads/@item.Image" />
+                    <div class="caption">
+                        <h6><a href="/Product/Details/@item.Id">@item.Name</a></h6>
+                        <h5 style="font-size:1.285714rem">@item.Price EGP</h5>
+                        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCarts", new { id = item.Id }, new { @class = "btn btn-success", style = "width:100%" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

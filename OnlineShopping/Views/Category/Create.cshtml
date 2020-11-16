@@ -1,0 +1,41 @@
+﻿@model OnlineShopping.Models.Category
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<h1 class="text-center">Add New Category</h1>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Category Information
+        </div>
+        <form class="myForm" method="post" action="">
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer" style="margin-left:-50px">
+                <input type="submit" value="Add Category" class="btn btn-primary" />
+                @Html.ActionLink("Cancle", "Index", null, new { @class = "btn btn-danger" })
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

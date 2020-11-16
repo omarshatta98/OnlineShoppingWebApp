@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNet.Identity
+@using OnlineShopping.Data.Context;
+
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <strong>@user.UserName</strong>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">My profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/Order/Index">Orders</a></li>
+                    <li><a href="/Account/Edit/@user.Id">Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

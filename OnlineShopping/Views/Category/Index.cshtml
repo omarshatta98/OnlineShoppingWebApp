@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OnlineShopping.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h1 class="text-center">All Categories</h1>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-md-2">
+                <div class="thumbnail" style="width:187px">
+                    <div class="caption">
+                        <h4><a href="/Category/Details/@item.Id">@item.Name</a></h4>
+                        <h5 style="font-size:1.285714rem"><a href="/Category/Details/@item.Id">@item.Products.Count</a> Product</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
